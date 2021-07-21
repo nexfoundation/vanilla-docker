@@ -1,23 +1,23 @@
 version: "3.5"
 
 services:
-    httpd:
-        build:
-            context: "./images/httpd"
-        container_name: "httpd"
-        depends_on:
-            - "php-fpm"
-        networks:
-            - "vanilla_network"
-        ports:
-            - "9080:9080"
-            - "9443:9443"
-        volumes:
-            - "shared:/shared:cached" # allow to use the php-fpm socket
-            - "./logs/httpd:/var/log/httpd:delegated"
-            - "./resources/certificates:/certificates:cached"
-            - "./resources/usr/local/apache2/conf.d:/usr/local/apache2/conf.d:cached"
-            - "../:/srv/vanilla-repositories:cached"
+    # httpd:
+    #     build:
+    #         context: "./images/httpd"
+    #     container_name: "httpd"
+    #     depends_on:
+    #         - "php-fpm"
+    #     networks:
+    #         - "vanilla_network"
+    #     ports:
+    #         - "9080:9080"
+    #         - "9443:9443"
+    #     volumes:
+    #         - "shared:/shared:cached" # allow to use the php-fpm socket
+    #         - "./logs/httpd:/var/log/httpd:delegated"
+    #         - "./resources/certificates:/certificates:cached"
+    #         - "./resources/usr/local/apache2/conf.d:/usr/local/apache2/conf.d:cached"
+    #         - "../:/srv/vanilla-repositories:cached"
 
     nginx:
         build:
@@ -78,14 +78,14 @@ services:
             - "./resources/certificates:/usr/local/share/ca-certificates:cached" # Mount extra certificates
             - "./resources/sphinx:/sphinx:cached" # expose sphinx API. We have to do this here because we need to be enable to update the plugin before we can start the container.
             - "../:/srv/vanilla-repositories:cached"
-    php-fpm-xdebug:
-        build:
-            context: "./images/php-fpm"
-            dockerfile: DockerfileXDebug
-        container_name: "php-fpm-xdebug"
-        environment: *php-env
-        networks: *php-networks
-        volumes: *php-volumes
+    # php-fpm-xdebug:
+    #     build:
+    #         context: "./images/php-fpm"
+    #         dockerfile: DockerfileXDebug
+    #     container_name: "php-fpm-xdebug"
+    #     environment: *php-env
+    #     networks: *php-networks
+    #     volumes: *php-volumes
 
 volumes:
     shared:
