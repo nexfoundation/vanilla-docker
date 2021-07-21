@@ -58,7 +58,13 @@ services:
             - "./resources/etc/nginx/sites-available:/etc/nginx/sites-available:cached"
             - "./resources/etc/nginx/sites-enabled:/etc/nginx/sites-enabled:cached"
             - "../:/srv/vanilla-repositories:cached"
-
+            - "./data/certbot/conf:/etc/letsencrypt"
+            - "./data/certbot/www:/var/www/certbot"
+    certbot:
+        image: "certbot/certbot"
+        volumes:
+            - "./data/certbot/conf:/etc/letsencrypt"
+            - "./data/certbot/www:/var/www/certbot"
     # Don't forget to update docker-compose.unit-test.yml
     php-fpm:
         build:
