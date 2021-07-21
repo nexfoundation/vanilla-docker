@@ -4,6 +4,7 @@ services:
     database:
         build:
             context: "./images/${VANILLA_DOCKER_DATABASE}"
+        restart: unless-stopped
         container_name: "database"
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: "yes"

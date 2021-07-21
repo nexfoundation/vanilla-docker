@@ -23,6 +23,7 @@ services:
         build:
             context: "./images/nginx"
         # Transform the template into an actual file
+        restart: unless-stopped
         command: 
             - /bin/bash -c "envsubst < /etc/nginx/fastcgi.conf.tpl > /etc/nginx/fastcgi.conf && nginx -g 'daemon off;'"
             - "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
@@ -64,6 +65,7 @@ services:
             - "./data/certbot/www:/var/www/certbot"
     certbot:
         image: "certbot/certbot"
+        restart: unless-stopped
         volumes:
             - "./data/certbot/conf:/etc/letsencrypt"
             - "./data/certbot/www:/var/www/certbot"
@@ -72,6 +74,7 @@ services:
     php-fpm:
         build:
             context: "./images/php-fpm"
+        restart: unless-stopped
         container_name: "php-fpm"
         environment: &php-env
             - "TEST_BASEURL"
